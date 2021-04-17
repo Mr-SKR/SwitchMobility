@@ -30,52 +30,55 @@ export async function requestLocationPermission() {
   }
 }
 
+const scanAndConnect = () => {
+  const permission = requestLocationPermission();
+  if (permission) {
+    manager.startDeviceScan(null, null, (error, device) => {
+      // console.log(device.id);
+      // console.log(device);
+        if (error) {
+            // Handle error (scanning will be stopped automatically)
+            console.warn(error);
+            return
+        }
+
+        if (device !== null) {
+          console.log("device found ----> [id,name]", device.id, device.name);
+      }
+
+        // Check if it is a device you are looking for based on advertisement data
+        // or other criteria.
+        // manager.stopDeviceScan();
+        if (device.name === 'TI BLE Sensor Tag' || 
+            device.name === 'MI Band 2') {
+            
+            // Stop scanning as it's not necessary if you are scanning for one device.
+            console.log('Device scan stopped');
+            manager.stopDeviceScan();
+
+            // Proceed with connection.
+            device.connect()
+              .then((device) => {
+                  console.log(device.discoverAllServicesAndCharacteristics());
+                  return device.discoverAllServicesAndCharacteristics()
+              })
+              .then((device) => {
+                console.log('BLE LOGIC');
+                console.log(device);
+                // Do work on device with services and characteristics
+              })
+              .catch((error) => {
+                  // Handle errors
+              });
+        }
+    });
+  }
+  
+}
+
 const HomeScreen = ({ navigation }) => {
 
   const [state, setState] = useState({range: "0", battery: "0", status: "PARKED", switch: false, bleManager: false});
-
-  const scanAndConnect = () => {
-    const permission = requestLocationPermission();
-    if (permission) {
-      manager.startDeviceScan(null, null, (error, device) => {
-        // console.log(device.id);
-        // console.log(device);
-          if (error) {
-              // Handle error (scanning will be stopped automatically)
-              console.warn(error);
-              return
-          }
-
-          if (device !== null) {
-            console.log("device found ----> [id,name]", device.id, device.name);
-        }
-  
-          // Check if it is a device you are looking for based on advertisement data
-          // or other criteria.
-          if (device.name === 'TI BLE Sensor Tag' || 
-              device.name === 'SensorTag' || true) {
-              
-              // Stop scanning as it's not necessary if you are scanning for one device.
-              console.log('Device scan stopped');
-              manager.stopDeviceScan();
-  
-              // Proceed with connection.
-              device.connect()
-                .then((device) => {
-                    console.log(device.discoverAllServicesAndCharacteristics());
-                    return device.discoverAllServicesAndCharacteristics()
-                })
-                .then((device) => {
-                  // Do work on device with services and characteristics
-                })
-                .catch((error) => {
-                    // Handle errors
-                });
-          }
-      });
-    }
-    
-  }
 
   useEffect(() => {
     const subscription = manager.onStateChange((bleState) => {
@@ -99,7 +102,7 @@ const HomeScreen = ({ navigation }) => {
       <View style={styles.switchViewStyle}>
         <TouchableOpacity onPress={_onPressButton} >
           <Image
-            source={state.switch ? require('../assets/img/cycle.png'): require('../assets/img/switch.png')}
+            source={state.switch ? require('../assets/img/switch-off.png'): require('../assets/img/switch.png')}
           />
         </TouchableOpacity>
       </View>
