@@ -21,7 +21,7 @@ function MyTab() {
       <Tab.Navigator
       initialRouteName="Home"
       tabBarOptions={{
-        activeTintColor: '#e91e63',
+        activeTintColor: '#00ff00',
         activeTintSize: 32
       }}
       >
@@ -67,7 +67,7 @@ function MyTab() {
 
 const Navigator = () => {
     return(
-    <Stack.Navigator initialRouteName="Tabs" >
+    <Stack.Navigator initialRouteName="Tabs" screenOptions={{headerShown: false}}>
         <Stack.Screen
           component={MyTab}
           name="Tabs"
