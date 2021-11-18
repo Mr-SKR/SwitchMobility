@@ -1,15 +1,25 @@
 import React from 'react';
-import { Text, StyleSheet, View, Image, ImageBackground, TouchableOpacity, Dimensions } from 'react-native';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faHome, faUserCog, faUserFriends, faChartBar } from '@fortawesome/free-solid-svg-icons'
+import {
+  Text,
+  StyleSheet,
+  View,
+  Image,
+  ImageBackground,
+  TouchableOpacity,
+  Dimensions,
+} from 'react-native';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {
+  faHome,
+  faUserCog,
+  faUserFriends,
+  faChartBar,
+} from '@fortawesome/free-solid-svg-icons';
 
-
-const SettingsScreen = ({ navigation }) => {
-  
+const SettingsScreen = ({navigation}) => {
   return (
     <View style={styles.fullScreenViewStyle}>
-      
-      <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <Text>This is settings screen</Text>
       </View>
     </View>
@@ -19,7 +29,7 @@ const SettingsScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   fullScreenViewStyle: {
     flex: 1,
-    flexDirection: "column-reverse"
+    flexDirection: 'column-reverse',
   },
 });
 

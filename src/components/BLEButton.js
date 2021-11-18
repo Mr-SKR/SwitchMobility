@@ -1,7 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
-
 function BLEButton({onPress, title}) {
   return (
     <View style={styles.centerContents}>
@@ -16,6 +15,7 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     height: 50,
+    width: 100,
     backgroundColor: '#ffffff',
     borderRadius: 5,
     borderWidth: 2,
